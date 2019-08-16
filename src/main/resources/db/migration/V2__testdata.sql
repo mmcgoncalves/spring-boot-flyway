@@ -1,13 +1,2 @@
-INSERT INTO rotinas
-(descricao)
-values
-	('ROLE_PMP_SEARCH'),
-	('ROLE_PMP_CREATE'),
-	('ROLE_PMP_READ'),
-	('ROLE_PMP_UPDATE'),
-	('ROLE_PMP_DELETE'),
-	('ROLE_PMP_LANCAMENTOS'),
-	('ROLE_PMP_EQUIPAMENTOS'),
-	('ROLE_PMP_PROXIMOPMP'),
-	('ROLE_PMP_MANUTENCOES'),
-	('ROLE_PMP_FREQUENCIA');
+INSERT INTO users(username, first_name, last_name) VALUES('callicoder', 'Rajeev', 'Singh');
+INSERT INTO users(username, first_name, last_name) VALUES('flywaytest', 'Flyway', 'Test');
