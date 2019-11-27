@@ -32,7 +32,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	public final ResponseEntity<Object> handleUserException(AppException ex, WebRequest request) {
 		
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();		
-		fieldErrors.add(new FieldError(ex.getObject(), ex.getField(), ex.getMessage()));
+		if (ex.getErrors().isEmpty()) {
+			fieldErrors.add(new FieldError(ex.getObject(), ex.getField(), ex.getMessage()));			
+		}
+		
+		ex.getErrors().forEach(x -> fieldErrors.add(new FieldError(x.getObject(), x.getField(), x.getMessage())));
 		
         ApiError apiError = new ApiError(ex.getStatus());
         apiError.setMessage("Validation error");

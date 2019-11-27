@@ -1,5 +1,8 @@
 package br.com.flyway.exception;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 
 public class AppException extends RuntimeException {
@@ -9,13 +12,14 @@ public class AppException extends RuntimeException {
 	private String object;
 	private String field;
 	private String message;
+	private List<ApiValidationError> errors;
 
 	public AppException(HttpStatus status, String object, String field, String message) {
 
 		if (status == null) {
 			status = HttpStatus.BAD_REQUEST;
 		}
-		
+
 		if (object == null) {
 			object = "";
 		}
@@ -25,11 +29,28 @@ public class AppException extends RuntimeException {
 		this.field = field;
 		this.message = message;
 	}
+	
+	public AppException(HttpStatus status, List<ApiValidationError> errors) {
+
+		if (status == null) {
+			status = HttpStatus.BAD_REQUEST;
+		}	
+		
+		this.object = "";
+		this.status = status;
+		this.errors = errors;		
+		this.field = null;
+		this.message = null;
+	}
 
 	public AppException(String object, String field, String message) {
 		this(null, object, field, message);
 	}
 
+	public AppException(List<ApiValidationError> errors) {
+		this(null, errors);
+	}
+	
 	public AppException(String field, String message) {
 		this(null, null, field, message);
 	}
@@ -68,6 +89,18 @@ public class AppException extends RuntimeException {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public List<ApiValidationError> getErrors() {
+		if(this.errors == null) {
+			this.errors = new ArrayList<ApiValidationError>();
+		}
+		
+		return errors;
+	}
+
+	public void setErrors(List<ApiValidationError> errors) {
+		this.errors = errors;
 	}
 
 }
